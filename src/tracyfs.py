@@ -34,10 +34,10 @@ class TracyFS(Tracy):
         self.files[fname] = contents
 
     def get_fd(self):
-        for idx, fd in enumerate(self.fds):
-            if fd is None:
-                return 0x13371337 + idx
-        return 0x13371337 + len(self.fds)
+        return next(
+            (0x13371337 + idx for idx, fd in enumerate(self.fds) if fd is None),
+            0x13371337 + len(self.fds),
+        )
 
     def _handle_open(self, e, a, pre):
         if pre:

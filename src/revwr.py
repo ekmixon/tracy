@@ -12,8 +12,7 @@ class Reverser(Tracy):
     def _handle_write(self, e, a, pre):
         c = Child.from_event(e)
         if pre and a.a0 in (1, 2):
-            buf = c.read(a.a1, a.a2)
-            if buf:
+            if buf := c.read(a.a1, a.a2):
                 c.write(a.a1, buf[::-1])
 
 if __name__ == '__main__':
